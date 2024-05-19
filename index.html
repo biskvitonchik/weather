@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>xxx</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <main class="app">
+        <div class="search">
+          <form class="myForm">
+            <input
+              type="text"
+              autofocus
+              placeholder="location"
+              class="search__input"
+            />
+          </form>
+          <button class="search__btn">
+            <img
+              src="icons/searchIcon.png"
+              alt="search"
+              class="search__btn--icon"
+            />
+          </button>
+        </div>
+        <div class="weather">
+          <img src="#" alt="weather-icon" class="weather__icon" />
+          <div class="weather__degrees"></div>
+          <div class="weather__city"></div>
+        </div>
+        <div class="parameters">
+          <div class="parameters__speed-wind"></div>
+          <div class="parameters__humidity"></div>
+        </div>
+        <div class="error-message"></div>
+      </main>
+    </div>
+
+    <script type="module" src="src/js/main.js"></script>
+  </body>
+</html>
