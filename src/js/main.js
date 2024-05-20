@@ -43,20 +43,20 @@ async function getData(city) {
     parameters.style.display = "flex";
     errorMessage.style.display = "none";
     if (data.list[0].weather[0].main === "Clouds") {
-      wrapper.style.backgroundImage = "url('public/images/clouds.jpg')";
-      weatherIcon.src = "public/icons/cloudsIcon.png";
+      wrapper.style.backgroundImage = "url('/public/images/clouds.jpg')";
+      weatherIcon.src = "/public/icons/cloudsIcon.png";
     } else if (data.list[0].weather[0].main === "Clear") {
-      wrapper.style.backgroundImage = "url('public/images/clearSky.jpg')";
-      weatherIcon.src = "public/icons/sunIcon.png";
+      wrapper.style.backgroundImage = "url('/public/images/clearSky.jpg')";
+      weatherIcon.src = "/public/icons/sunIcon.png";
     } else if (data.list[0].weather[0].main === "Rain") {
-      wrapper.style.backgroundImage = "url('public/images/rain.jpg')";
-      weatherIcon.src = "public/icons/rainIcon.png";
+      wrapper.style.backgroundImage = "url('/public/images/rain.jpg')";
+      weatherIcon.src = "/public/icons/rainIcon.png";
     } else if (data.list[0].weather[0].main === "Mist") {
-      wrapper.style.backgroundImage = "url('public/images/mist.png')";
-      weatherIcon.src = "public/icons/mistIcon.png";
+      wrapper.style.backgroundImage = "url('/public/images/mist.png')";
+      weatherIcon.src = "/public/icons/mistIcon.png";
     } else if (data.list[0].weather[0].main === "Haze") {
-      wrapper.style.backgroundImage = "url('public/images/haze.jpg')";
-      weatherIcon.src = "public/icons/hazeIcon.png";
+      wrapper.style.backgroundImage = "url('/public/images/haze.jpg')";
+      weatherIcon.src = "/public/icons/hazeIcon.png";
     }
   } catch (error) {
     console.log(error.message);
