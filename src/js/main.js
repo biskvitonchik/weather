@@ -1,9 +1,9 @@
 const API_KEY = "7023c4f8b61573243ceb881918b43235";
 const URL = "https://api.openweathermap.org/data/2.5/forecast?q=";
+
 const wrapper = document.querySelector(".wrapper");
 const weather = document.querySelector(".weather");
 const weatherIcon = document.querySelector(".weather__icon");
-const loader = document.querySelector(".loader");
 const degrees = document.querySelector(".weather__degrees");
 const cityName = document.querySelector(".weather__city");
 const searchInput = document.querySelector(".search__input");
@@ -13,57 +13,144 @@ const parameters = document.querySelector(".parameters");
 const speedWind = document.querySelector(".parameters__speed-wind");
 const humidity = document.querySelector(".parameters__humidity");
 const errorMessage = document.querySelector(".error-message");
+const weekCard = document.querySelector(".week");
+const forecastInscription = document.querySelector(".forecast-inscription");
 
-const data = [];
+searchIcon.addEventListener("click", searchWithLoupe);
+myForm.addEventListener("submit", searchWithForm);
 
-searchIcon.addEventListener("click", () => {
-  getData(searchInput.value);
+async function fetchData(city) {
+  try {
+    const response = await fetch(`${URL}${city}&appid=${API_KEY}`);
+    if (!response.ok) {
+      throw new Error("city not found");
+    }
+    const data = await response.json();
+    updateUI(data);
+    const { maxTemperatureByDay, iconsByDay } = processWeatherData(data);
+    createWeekCard(maxTemperatureByDay, iconsByDay);
+  } catch (error) {
+    weekCard.textContent = "";
+    errorMessage.textContent = `City: '${searchInput.value}' not found`;
+    errorMessage.style.display = "block";
+    weather.style.display = "none";
+    parameters.style.display = "none";
+    forecastInscription.style.display = "none";
+    wrapper.style.backgroundImage = "url('images/Oops.png')";
+  }
+}
+
+async function searchWithLoupe() {
+  await fetchData(searchInput.value);
   searchInput.value = "";
-});
+}
 
-myForm.addEventListener("submit", (event) => {
-  event.preventDefault();
+async function searchWithForm(e) {
+  e.preventDefault();
   if (searchInput.value) {
-    getData(searchInput.value);
+    await fetchData(searchInput.value);
     searchInput.value = "";
   }
-});
+}
 
-async function getData(city) {
-  try {
-    const response = await fetch(URL + city + "&appid=" + API_KEY);
-    const data = await response.json();
-    degrees.innerHTML = Math.floor(data.list[0].main.temp - 273.15) + "&#176;";
-    cityName.innerHTML = data.city.name;
-    speedWind.innerHTML = "wind: " + data.list[0].wind.speed + "m/s";
-    humidity.innerHTML = "humidity: " + data.list[0].main.humidity + "%";
-    weather.style.display = "flex";
-    console.log(data);
-    weatherIcon.style.display = "flex";
-    parameters.style.display = "flex";
-    errorMessage.style.display = "none";
-    if (data.list[0].weather[0].main === "Clouds") {
+function updateUI(data) {
+  degrees.innerHTML = Math.floor(data.list[0].main.temp - 273.15) + "&#176;";
+  cityName.innerHTML = data.city.name;
+  speedWind.innerHTML = "wind: " + data.list[0].wind.speed + "m/s";
+  humidity.innerHTML = "humidity: " + data.list[0].main.humidity + "%";
+  weather.style.display = "flex";
+  weatherIcon.style.display = "flex";
+  parameters.style.display = "flex";
+  errorMessage.style.display = "none";
+
+  const weatherType = data.list[0].weather[0].main;
+
+  switch (weatherType) {
+    case "Clouds":
       wrapper.style.backgroundImage = "url('public/images/clouds.jpg')";
       weatherIcon.src = "public/icons/cloudsIcon.png";
-    } else if (data.list[0].weather[0].main === "Clear") {
+      break;
+    case "Clear":
       wrapper.style.backgroundImage = "url('public/images/clearSky.jpg')";
       weatherIcon.src = "public/icons/sunIcon.png";
-    } else if (data.list[0].weather[0].main === "Rain") {
+      break;
+    case "Rain":
       wrapper.style.backgroundImage = "url('public/images/rain.jpg')";
       weatherIcon.src = "public/icons/rainIcon.png";
-    } else if (data.list[0].weather[0].main === "Mist") {
+      break;
+    case "Mist":
       wrapper.style.backgroundImage = "url('public/images/mist.png')";
       weatherIcon.src = "public/icons/mistIcon.png";
-    } else if (data.list[0].weather[0].main === "Haze") {
+      break;
+    case "Haze":
       wrapper.style.backgroundImage = "url('public/images/haze.jpg')";
       weatherIcon.src = "public/icons/hazeIcon.png";
+      break;
+    default:
+      wrapper.style.backgroundImage = "none";
+      weatherIcon.src = "public/icons/defaultIcon.png";
+  }
+}
+
+function processWeatherData(data) {
+  const maxTemperatureByDay = {};
+  const iconsByDay = {};
+  const todayDate = data.list[0].dt_txt.split(" ")[0].split("-")[2];
+
+  data.list.forEach((item) => {
+    const date = item.dt_txt.split(" ")[0].split("-")[2];
+    const maxTemp = Math.round(item.main.temp_max - 273.15);
+    const time = item.dt_txt.split(" ")[1];
+
+    if (date === todayDate) return;
+
+    if (!maxTemperatureByDay[date]) {
+      maxTemperatureByDay[date] = maxTemp;
+    } else if (maxTemp > maxTemperatureByDay[date]) {
+      maxTemperatureByDay[date] = maxTemp;
     }
-  } catch (error) {
-    console.log(error.message);
-    weather.style.display = "none";
-    weatherIcon.style.display = "none";
-    parameters.style.display = "none";
-    errorMessage.innerHTML = "City not found";
-    errorMessage.style.display = "block";
+
+    if (time === "15:00:00") {
+      iconsByDay[date] = item.weather[0].main;
+    }
+  });
+  return { maxTemperatureByDay, iconsByDay };
+}
+
+function createWeekCard(maxTemperatureByDay, iconsByDay) {
+  weekCard.textContent = "";
+  weekCard.style.display = "flex";
+  let count = 0;
+
+  for (const [date, maxTemp] of Object.entries(maxTemperatureByDay)) {
+    if (count >= 4) break;
+
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+            <h3>${date}</h3>
+            <img src="${getIconSrc(iconsByDay[date])}" alt="${iconsByDay[date]}" />
+            <p>${maxTemp}°</p>
+        `;
+    forecastInscription.style.display = "block";
+    weekCard.appendChild(card);
+    count++;
+  }
+}
+
+function getIconSrc(weatherType) {
+  switch (weatherType) {
+    case "Clouds":
+      return "public/icons/cloudsIcon.png";
+    case "Clear":
+      return "public/icons/sunIcon.png";
+    case "Rain":
+      return "public/icons/rainIcon.png";
+    case "Mist":
+      return "public/icons/mistIcon.png";
+    case "Haze":
+      return "public/icons/hazeIcon.png";
+    default:
+      return "public/icons/defaultIcon.png";
   }
 }
