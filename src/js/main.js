@@ -16,8 +16,8 @@ const errorMessage = document.querySelector(".error-message");
 const weekCard = document.querySelector(".week");
 const forecastInscription = document.querySelector(".forecast-inscription");
 
-searchIcon.addEventListener("click", searchWithLoupe);
-myForm.addEventListener("submit", searchWithForm);
+searchIcon.addEventListener("click", handleSearch);
+myForm.addEventListener("submit", handleSearch);
 
 async function fetchData(city) {
   try {
@@ -40,16 +40,19 @@ async function fetchData(city) {
   }
 }
 
-async function searchWithLoupe() {
-  await fetchData(searchInput.value);
-  searchInput.value = "";
-}
-
-async function searchWithForm(e) {
-  e.preventDefault();
-  if (searchInput.value) {
-    await fetchData(searchInput.value);
-    searchInput.value = "";
+async function handleSearch(event) {
+  if (event) event.preventDefault();
+  const query = searchInput.value.trim();
+  
+  if (query) {
+    try {
+      console.log(event);
+      await fetchData(query);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      searchInput.value = "";
+    }
   }
 }
 
