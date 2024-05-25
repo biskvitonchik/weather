@@ -1,4 +1,6 @@
 $burlywood: burlywood;
+$fields: linear-gradient(rgb(220, 169, 169), rgb(196, 187, 208));
+$fields-hover: linear-gradient(rgb(186, 163, 185), rgb(199, 186, 216));
 
 * {
   margin: 0;
@@ -8,7 +10,7 @@ $burlywood: burlywood;
 }
 
 body {
-  background: linear-gradient(rgb(148, 38, 38), rgb(198, 218, 66));
+  background: linear-gradient(rgb(220, 169, 169, 0.9), rgb(119, 86, 163));
 }
 
 .wrapper {
@@ -27,9 +29,8 @@ body {
   align-items: center;
   width: 350px;
   padding: 5px;
-  background-color: $burlywood;
+  background: linear-gradient(rgb(220, 169, 169, 0.9), rgb(119, 86, 163, 0.9));
   border-radius: 20px;
-  border: 2px solid black;
 }
 
 .search {
@@ -41,24 +42,29 @@ body {
     height: 40px;
     border-radius: 10px;
     padding: 6px;
-    background-color: $burlywood;
+    background: $fields;
     text-align: center;
     outline: none;
     font-size: 20px;
+    border: 1px solid rgb(137, 106, 169);
 
     &::placeholder {
       font-size: 20px;
     }
+
+    &:hover {
+      background: $fields-hover;
+    }
   }
 
   &__btn {
-    background-color: $burlywood;
-    border: none;
+    background: $fields;
+    border: 1px solid rgb(137, 106, 169);
     padding: 5px;
     border-radius: 10px;
 
     &:hover {
-      background-color: rgb(210, 177, 133);
+      background: $fields-hover;
     }
 
     &--icon {
@@ -99,7 +105,7 @@ body {
 .parameters {
   display: none;
   justify-content: space-between;
-  font-size: 30px;
+  font-size: 22px;
   width: 100%;
   margin-bottom: 15px;
 
