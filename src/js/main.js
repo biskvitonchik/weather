@@ -36,7 +36,7 @@ async function fetchData(city) {
     weather.style.display = "none";
     parameters.style.display = "none";
     forecastInscription.style.display = "none";
-    wrapper.style.backgroundImage = "url('images/Oops.png')";
+    wrapper.style.backgroundImage = "url('public/images/Oops.png')";
   }
 }
 
@@ -46,10 +46,8 @@ async function handleSearch(event) {
   
   if (query) {
     try {
-      console.log(event);
       await fetchData(query);
     } catch (error) {
-      console.error('Error fetching data:', error);
     } finally {
       searchInput.value = "";
     }
