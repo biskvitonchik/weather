@@ -6,7 +6,7 @@
 }
 
 body {
-  background: linear-gradient(rgb(148, 38, 38), rgb(198, 218, 66));
+  background: linear-gradient(rgba(220, 169, 169, 0.9), rgb(119, 86, 163));
 }
 
 .wrapper {
@@ -25,9 +25,8 @@ body {
   align-items: center;
   width: 350px;
   padding: 5px;
-  background-color: burlywood;
+  background: linear-gradient(rgba(220, 169, 169, 0.9), rgba(119, 86, 163, 0.9));
   border-radius: 20px;
-  border: 2px solid black;
 }
 
 .search {
@@ -39,10 +38,11 @@ body {
   height: 40px;
   border-radius: 10px;
   padding: 6px;
-  background-color: burlywood;
+  background: linear-gradient(rgb(220, 169, 169), rgb(196, 187, 208));
   text-align: center;
   outline: none;
   font-size: 20px;
+  border: 1px solid rgb(137, 106, 169);
 }
 .search__input::-moz-placeholder {
   font-size: 20px;
@@ -50,14 +50,17 @@ body {
 .search__input::placeholder {
   font-size: 20px;
 }
+.search__input:hover {
+  background: linear-gradient(rgb(186, 163, 185), rgb(199, 186, 216));
+}
 .search__btn {
-  background-color: burlywood;
-  border: none;
+  background: linear-gradient(rgb(220, 169, 169), rgb(196, 187, 208));
+  border: 1px solid rgb(137, 106, 169);
   padding: 5px;
   border-radius: 10px;
 }
 .search__btn:hover {
-  background-color: rgb(210, 177, 133);
+  background: linear-gradient(rgb(186, 163, 185), rgb(199, 186, 216));
 }
 .search__btn--icon {
   width: 23px;
@@ -91,7 +94,7 @@ body {
 .parameters {
   display: none;
   justify-content: space-between;
-  font-size: 30px;
+  font-size: 22px;
   width: 100%;
   margin-bottom: 15px;
 }
