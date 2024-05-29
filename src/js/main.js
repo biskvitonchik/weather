@@ -1,1 +1,1 @@
-import '../components/events'
+import '../components/events.js'
