@@ -1,6 +1,6 @@
-import { fetchData } from "../components/api";
-import { updateUI, showError, createWeekCard } from "./ui";
-import { processWeatherData } from "./dataProcessing";
+import { fetchData } from "../components/api.js";
+import { updateUI, showError, createWeekCard } from "./ui.js";
+import { processWeatherData } from "./dataProcessing.js";
 
 const searchInput = document.querySelector(".search__input");
 const searchIcon = document.querySelector(".search__btn--icon");
