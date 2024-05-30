@@ -5,6 +5,7 @@ import { processWeatherData } from "./dataProcessing.js";
 const searchInput = document.querySelector(".search__input");
 const searchIcon = document.querySelector(".search__btn--icon");
 const myForm = document.querySelector(".myForm");
+const loader = document.querySelector(".loader");
 
 searchIcon.addEventListener("click", handleSearch);
 myForm.addEventListener("submit", handleSearch);
@@ -14,6 +15,7 @@ async function handleSearch(event) {
   const query = searchInput.value.trim();
 
   if (query) {
+    loader.style.display = 'block';
     try {
       const data = await fetchData(query);
       updateUI(data);
@@ -23,6 +25,7 @@ async function handleSearch(event) {
       showError(query);
     } finally {
       searchInput.value = "";
+      loader.style.display = 'none';
     }
   }
 }
