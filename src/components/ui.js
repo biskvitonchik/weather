@@ -1,100 +1,103 @@
-const wrapper = document.querySelector(".wrapper");
-const weather = document.querySelector(".weather");
-const weatherIcon = document.querySelector(".weather__icon");
-const degrees = document.querySelector(".weather__degrees");
-const cityName = document.querySelector(".weather__city");
-const parameters = document.querySelector(".parameters");
-const speedWind = document.querySelector(".parameters__speed-wind");
-const humidity = document.querySelector(".parameters__humidity");
-const errorMessage = document.querySelector(".error-message");
-const weekCard = document.querySelector(".week");
-const forecastInscription = document.querySelector(".forecast-inscription");
-
-export function updateUI(data) {
-  degrees.innerHTML = Math.floor(data.list[0].main.temp - 273.15) + "&#176;";
-  cityName.innerHTML = data.city.name;
-  speedWind.innerHTML = "wind: " + data.list[0].wind.speed + "m/s";
-  humidity.innerHTML = "humidity: " + data.list[0].main.humidity + "%";
-  weather.style.display = "flex";
-  weatherIcon.style.display = "flex";
-  parameters.style.display = "flex";
-  errorMessage.style.display = "none";
-
-  const weatherType = data.list[0].weather[0].main;
-
-  switch (weatherType) {
-    case "Clouds":
-      wrapper.style.backgroundImage = "url('public/images/clouds.jpg')";
-      weatherIcon.src = "public/icons/cloudsIcon.png";
-      break;
-    case "Clear":
-      wrapper.style.backgroundImage = "url('public/images/clearSky.jpg')";
-      weatherIcon.src = "public/icons/sunIcon.png";
-      break;
-    case "Rain":
-      wrapper.style.backgroundImage = "url('public/images/rain.jpg')";
-      weatherIcon.src = "public/icons/rainIcon.png";
-      break;
-    case "Mist":
-      wrapper.style.backgroundImage = "url('public/images/mist.png')";
-      weatherIcon.src = "public/icons/mistIcon.png";
-      break;
-    case "Haze":
-      wrapper.style.backgroundImage = "url('public/images/haze.jpg')";
-      weatherIcon.src = "public/icons/hazeIcon.png";
-      break;
-    default:
-      wrapper.style.backgroundImage = "none";
-      weatherIcon.src = "public/icons/defaultIcon.png";
+export class UI {
+  constructor() {
+    this.wrapper = document.querySelector(".wrapper");
+    this.weather = document.querySelector(".weather");
+    this.weatherIcon = document.querySelector(".weather__icon");
+    this.degrees = document.querySelector(".weather__degrees");
+    this.cityName = document.querySelector(".weather__city");
+    this.parameters = document.querySelector(".parameters");
+    this.speedWind = document.querySelector(".parameters__speed-wind");
+    this.humidity = document.querySelector(".parameters__humidity");
+    this.errorMessage = document.querySelector(".error-message");
+    this.weekCard = document.querySelector(".week");
+    this.forecastInscription = document.querySelector(".forecast-inscription");
   }
-}
 
-export function createWeekCard(maxTemperatureByDay, iconsByDay) {
-  weekCard.textContent = "";
-  weekCard.style.display = "flex";
-  let count = 0;
+  updateUI(data) {
+    this.degrees.innerHTML =
+      Math.floor(data.list[0].main.temp - 273.15) + "&#176;";
+    this.cityName.innerHTML = data.city.name;
+    this.speedWind.innerHTML = "wind: " + data.list[0].wind.speed + "m/s";
+    this.humidity.innerHTML = "humidity: " + data.list[0].main.humidity + "%";
+    this.weather.style.display = "flex";
+    this.weatherIcon.style.display = "flex";
+    this.parameters.style.display = "flex";
+    this.errorMessage.style.display = "none";
 
-  for (const [date, maxTemp] of Object.entries(maxTemperatureByDay)) {
-    if (count >= 4) break;
-
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-              <h3>${date}</h3>
-              <img src="${getIconSrc(iconsByDay[date])}" alt="${
-      iconsByDay[date]
-    }" />
-              <p>${maxTemp}°</p>
-          `;
-    forecastInscription.style.display = "block";
-    weekCard.appendChild(card);
-    count++;
+    const weatherType = data.list[0].weather[0].main;
+    this.setBackgroundAndIcon(weatherType);
   }
-}
 
-export function getIconSrc(weatherType) {
-  switch (weatherType) {
-    case "Clouds":
-      return "public/icons/cloudsIcon.png";
-    case "Clear":
-      return "public/icons/sunIcon.png";
-    case "Rain":
-      return "public/icons/rainIcon.png";
-    case "Mist":
-      return "public/icons/mistIcon.png";
-    case "Haze":
-      return "public/icons/hazeIcon.png";
-    default:
-      return "public/icons/defaultIcon.png";
+  setBackgroundAndIcon(weatherType) {
+    const weatherConfig = {
+      Clouds: {
+        background: "public/images/clouds.jpg",
+        icon: "public/icons/cloudsIcon.png",
+      },
+      Clear: {
+        background: "public/images/clearSky.jpg",
+        icon: "public/icons/sunIcon.png",
+      },
+      Rain: {
+        background: "public/images/rain.jpg",
+        icon: "public/icons/rainIcon.png",
+      },
+      Mist: {
+        background: "public/images/mist.png",
+        icon: "public/icons/mistIcon.png",
+      },
+      Haze: {
+        background: "public/images/haze.jpg",
+        icon: "public/icons/hazeIcon.png",
+      },
+      default: { background: "none", icon: "public/icons/defaultIcon.png" },
+    };
+    const { background, icon } =
+      weatherConfig[weatherType] || weatherConfig["default"];
+    this.wrapper.style.backgroundImage = `url('${background}')`;
+    this.weatherIcon.src = icon;
   }
-}
 
-export function showError(cityName) {
-  weekCard.textContent = "";
-  errorMessage.textContent = `City: '${cityName}' not found`;
-  errorMessage.style.display = "block";
-  weather.style.display = "none";
-  parameters.style.display = "none";
-  forecastInscription.style.display = "none";
-  wrapper.style.backgroundImage = "url('public/images/Oops.png')";
+  createWeekCard(maxTemperatureByDay, iconsByDay) {
+    this.weekCard.textContent = "";
+    this.weekCard.style.display = "flex";
+    let count = 0;
+
+    for (const [date, maxTemp] of Object.entries(maxTemperatureByDay)) {
+      if (count >= 4) break;
+
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <h3>${date}</h3>
+        <img src="${this.getIconSrc(iconsByDay[date])}" alt="${iconsByDay[date]}" />
+        <p>${maxTemp}°</p>
+      `;
+      this.forecastInscription.style.display = "block";
+      this.weekCard.appendChild(card);
+      count++;
+    }
+  }
+
+  getIconSrc(weatherType) {
+    const weatherIcons = {
+      Clouds: "public/icons/cloudsIcon.png",
+      Clear: "public/icons/sunIcon.png",
+      Rain: "public/icons/rainIcon.png",
+      Mist: "public/icons/mistIcon.png",
+      Haze: "public/icons/hazeIcon.png",
+      default: "public/icons/defaultIcon.png",
+    };
+    return weatherIcons[weatherType] || weatherIcons["default"];
+  }
+
+  showError(cityName) {
+    this.weekCard.textContent = "";
+    this.errorMessage.textContent = `City: '${cityName}' not found`;
+    this.errorMessage.style.display = "block";
+    this.weather.style.display = "none";
+    this.parameters.style.display = "none";
+    this.forecastInscription.style.display = "none";
+    this.wrapper.style.backgroundImage = "none";
+  }
 }
