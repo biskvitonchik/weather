@@ -41,36 +41,40 @@ export class UI {
   }
 
   setBackgroundAndIcon(weatherType: string) {
-    const weatherConfig: Record<string, { background: string; icon: string; }> = {
-      Clouds: {
-        background: "public/images/clouds.jpg",
-        icon: "public/icons/cloudsIcon.png",
-      },
-      Clear: {
-        background: "public/images/clearSky.jpg",
-        icon: "public/icons/sunIcon.png",
-      },
-      Rain: {
-        background: "public/images/rain.jpg",
-        icon: "public/icons/rainIcon.png",
-      },
-      Mist: {
-        background: "public/images/mist.png",
-        icon: "public/icons/mistIcon.png",
-      },
-      Haze: {
-        background: "public/images/haze.jpg",
-        icon: "public/icons/hazeIcon.png",
-      },
-      default: { background: "none", icon: "public/icons/defaultIcon.png" },
-    };
+    const weatherConfig: Record<string, { background: string; icon: string }> =
+      {
+        Clouds: {
+          background: "public/images/clouds.jpg",
+          icon: "public/icons/cloudsIcon.png",
+        },
+        Clear: {
+          background: "public/images/clearSky.jpg",
+          icon: "public/icons/sunIcon.png",
+        },
+        Rain: {
+          background: "public/images/rain.jpg",
+          icon: "public/icons/rainIcon.png",
+        },
+        Mist: {
+          background: "public/images/mist.png",
+          icon: "public/icons/mistIcon.png",
+        },
+        Haze: {
+          background: "public/images/haze.jpg",
+          icon: "public/icons/hazeIcon.png",
+        },
+        default: { background: "none", icon: "public/icons/defaultIcon.png" },
+      };
 
     const { background, icon } = weatherConfig[weatherType] || weatherConfig.default;
     this.wrapper.style.backgroundImage = `url('${background}')`;
     this.weatherIcon.src = icon;
   }
 
-  createWeekCard(maxTemperatureByDay: {[key:string]: number}, iconsByDay: {[key: string]: string}) {
+  createWeekCard(
+    maxTemperatureByDay: { [key: string]: number },
+    iconsByDay: { [key: string]: string }
+  ) {
     this.weekCard.textContent = "";
     this.weekCard.style.display = "flex";
     let count = 0;
@@ -82,7 +86,7 @@ export class UI {
       card.className = "card";
       card.innerHTML = `
         <h3>${date}</h3>
-        <img src="${this.getIconSrc(iconsByDay[date])}" alt="${iconsByDay[date]}" />
+        <img src="${this.getIconSrc(iconsByDay[date])}" alt="${iconsByDay[date]}"/>
         <p>${maxTemp}°</p>
       `;
       this.forecastInscription.style.display = "block";
