@@ -1,6 +1,6 @@
-import { WeatherAPI } from "./api";
-import { WeatherDataProcessor } from "./dataProcessing";
-import { UI } from "./ui";
+import { WeatherAPI } from "./api.ts";
+import { WeatherDataProcessor } from "./dataProcessing.ts";
+import { UI } from "./ui.ts";
 
 const API_KEY = "7023c4f8b61573243ceb881918b43235";
 const BASE_URL = "https://api.openweathermap.org/data/2.5/forecast?q=";

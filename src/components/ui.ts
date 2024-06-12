@@ -12,17 +12,17 @@ export class UI {
   forecastInscription: HTMLParagraphElement;
 
   constructor() {
-    this.wrapper = document.querySelector(".wrapper");
-    this.weather = document.querySelector(".weather");
-    this.weatherIcon = document.querySelector(".weather__icon");
-    this.degrees = document.querySelector(".weather__degrees");
-    this.cityName = document.querySelector(".weather__city");
-    this.parameters = document.querySelector(".parameters");
-    this.speedWind = document.querySelector(".parameters__speed-wind");
-    this.humidity = document.querySelector(".parameters__humidity");
-    this.errorMessage = document.querySelector(".error-message");
-    this.weekCard = document.querySelector(".week");
-    this.forecastInscription = document.querySelector(".forecast-inscription");
+    this.wrapper = document.querySelector(".wrapper")!;
+    this.weather = document.querySelector(".weather")!;
+    this.weatherIcon = document.querySelector(".weather__icon")!;
+    this.degrees = document.querySelector(".weather__degrees")!;
+    this.cityName = document.querySelector(".weather__city")!;
+    this.parameters = document.querySelector(".parameters")!;
+    this.speedWind = document.querySelector(".parameters__speed-wind")!;
+    this.humidity = document.querySelector(".parameters__humidity")!;
+    this.errorMessage = document.querySelector(".error-message")!;
+    this.weekCard = document.querySelector(".week")!;
+    this.forecastInscription = document.querySelector(".forecast-inscription")!;
   }
 
   updateUI(data: any) {
@@ -41,7 +41,7 @@ export class UI {
   }
 
   setBackgroundAndIcon(weatherType: string) {
-    const weatherConfig = {
+    const weatherConfig: Record<string, { background: string; icon: string; }> = {
       Clouds: {
         background: "public/images/clouds.jpg",
         icon: "public/icons/cloudsIcon.png",
@@ -64,8 +64,8 @@ export class UI {
       },
       default: { background: "none", icon: "public/icons/defaultIcon.png" },
     };
-    const { background, icon } =
-      weatherConfig[weatherType] || weatherConfig["default"];
+
+    const { background, icon } = weatherConfig[weatherType] || weatherConfig.default;
     this.wrapper.style.backgroundImage = `url('${background}')`;
     this.weatherIcon.src = icon;
   }
@@ -92,7 +92,7 @@ export class UI {
   }
 
   getIconSrc(weatherType: string): string {
-    const weatherIcons = {
+    const weatherIcons: Record<string, string> = {
       Clouds: "public/icons/cloudsIcon.png",
       Clear: "public/icons/sunIcon.png",
       Rain: "public/icons/rainIcon.png",
@@ -100,7 +100,7 @@ export class UI {
       Haze: "public/icons/hazeIcon.png",
       default: "public/icons/defaultIcon.png",
     };
-    return weatherIcons[weatherType] || weatherIcons["default"];
+    return weatherIcons[weatherType] || weatherIcons.default;
   }
 
   showError(cityName: string) {
