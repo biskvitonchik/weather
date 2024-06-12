@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="Permissions-Policy" content="interest-cohort=()" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"
+    />
     <title>Weather Forecast</title>
     <link rel="stylesheet" href="css/style.css" />
   </head>
@@ -11,7 +14,7 @@
     <div class="wrapper">
       <main class="app">
         <span class="loader"></span>
-        <div class="search">
+        <section class="search">
           <form class="myForm">
             <input
               type="text"
@@ -27,19 +30,19 @@
               class="search__btn--icon"
             />
           </button>
-        </div>
-        <div class="weather">
+        </section>
+        <section class="weather">
           <img src="#" alt="weather-icon" class="weather__icon" />
           <div class="weather__degrees"></div>
           <div class="weather__city"></div>
-        </div>
-        <div class="parameters">
+        </section>
+        <section class="parameters">
           <div class="parameters__speed-wind"></div>
           <div class="parameters__humidity"></div>
-        </div>
+        </section>
         <div class="error-message"></div>
-        <p class="forecast-inscription">next four day</p>
-        <div class="week"></div>
+        <h2 class="forecast-inscription">next four day</h2>
+        <section class="week"></section>
       </main>
     </div>
 
