@@ -3,8 +3,8 @@ export class WeatherDataProcessor {
     maxTemperatureByDay: { [key: string]: number };
     iconsByDay: { [key: string]: string };
   } {
-    const maxTemperatureByDay = {};
-    const iconsByDay = {};
+    const maxTemperatureByDay: { [key: string]: number } = {};
+    const iconsByDay: { [key: string]: string } = {};
     const todayDate = data.list[0].dt_txt.split(" ")[0].split("-")[2];
 
     data.list.forEach((item: any) => {

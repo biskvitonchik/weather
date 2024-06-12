@@ -12,17 +12,17 @@ export class UI {
   forecastInscription: HTMLParagraphElement;
 
   constructor() {
-    this.wrapper = document.querySelector(".wrapper");
-    this.weather = document.querySelector(".weather");
-    this.weatherIcon = document.querySelector(".weather__icon");
-    this.degrees = document.querySelector(".weather__degrees");
-    this.cityName = document.querySelector(".weather__city");
-    this.parameters = document.querySelector(".parameters");
-    this.speedWind = document.querySelector(".parameters__speed-wind");
-    this.humidity = document.querySelector(".parameters__humidity");
-    this.errorMessage = document.querySelector(".error-message");
-    this.weekCard = document.querySelector(".week");
-    this.forecastInscription = document.querySelector(".forecast-inscription");
+    this.wrapper = document.querySelector(".wrapper")!;
+    this.weather = document.querySelector(".weather")!;
+    this.weatherIcon = document.querySelector(".weather__icon")!;
+    this.degrees = document.querySelector(".weather__degrees")!;
+    this.cityName = document.querySelector(".weather__city")!;
+    this.parameters = document.querySelector(".parameters")!;
+    this.speedWind = document.querySelector(".parameters__speed-wind")!;
+    this.humidity = document.querySelector(".parameters__humidity")!;
+    this.errorMessage = document.querySelector(".error-message")!;
+    this.weekCard = document.querySelector(".week")!;
+    this.forecastInscription = document.querySelector(".forecast-inscription")!;
   }
 
   updateUI(data: any) {
@@ -41,36 +41,40 @@ export class UI {
   }
 
   setBackgroundAndIcon(weatherType: string) {
-    const weatherConfig = {
-      Clouds: {
-        background: "public/images/clouds.jpg",
-        icon: "public/icons/cloudsIcon.png",
-      },
-      Clear: {
-        background: "public/images/clearSky.jpg",
-        icon: "public/icons/sunIcon.png",
-      },
-      Rain: {
-        background: "public/images/rain.jpg",
-        icon: "public/icons/rainIcon.png",
-      },
-      Mist: {
-        background: "public/images/mist.png",
-        icon: "public/icons/mistIcon.png",
-      },
-      Haze: {
-        background: "public/images/haze.jpg",
-        icon: "public/icons/hazeIcon.png",
-      },
-      default: { background: "none", icon: "public/icons/defaultIcon.png" },
-    };
-    const { background, icon } =
-      weatherConfig[weatherType] || weatherConfig["default"];
+    const weatherConfig: Record<string, { background: string; icon: string }> =
+      {
+        Clouds: {
+          background: "public/images/clouds.jpg",
+          icon: "public/icons/cloudsIcon.png",
+        },
+        Clear: {
+          background: "public/images/clearSky.jpg",
+          icon: "public/icons/sunIcon.png",
+        },
+        Rain: {
+          background: "public/images/rain.jpg",
+          icon: "public/icons/rainIcon.png",
+        },
+        Mist: {
+          background: "public/images/mist.png",
+          icon: "public/icons/mistIcon.png",
+        },
+        Haze: {
+          background: "public/images/haze.jpg",
+          icon: "public/icons/hazeIcon.png",
+        },
+        default: { background: "none", icon: "public/icons/defaultIcon.png" },
+      };
+
+    const { background, icon } = weatherConfig[weatherType] || weatherConfig.default;
     this.wrapper.style.backgroundImage = `url('${background}')`;
     this.weatherIcon.src = icon;
   }
 
-  createWeekCard(maxTemperatureByDay: {[key:string]: number}, iconsByDay: {[key: string]: string}) {
+  createWeekCard(
+    maxTemperatureByDay: { [key: string]: number },
+    iconsByDay: { [key: string]: string }
+  ) {
     this.weekCard.textContent = "";
     this.weekCard.style.display = "flex";
     let count = 0;
@@ -82,7 +86,7 @@ export class UI {
       card.className = "card";
       card.innerHTML = `
         <h3>${date}</h3>
-        <img src="${this.getIconSrc(iconsByDay[date])}" alt="${iconsByDay[date]}" />
+        <img src="${this.getIconSrc(iconsByDay[date])}" alt="${iconsByDay[date]}"/>
         <p>${maxTemp}°</p>
       `;
       this.forecastInscription.style.display = "block";
@@ -92,7 +96,7 @@ export class UI {
   }
 
   getIconSrc(weatherType: string): string {
-    const weatherIcons = {
+    const weatherIcons: Record<string, string> = {
       Clouds: "public/icons/cloudsIcon.png",
       Clear: "public/icons/sunIcon.png",
       Rain: "public/icons/rainIcon.png",
@@ -100,7 +104,7 @@ export class UI {
       Haze: "public/icons/hazeIcon.png",
       default: "public/icons/defaultIcon.png",
     };
-    return weatherIcons[weatherType] || weatherIcons["default"];
+    return weatherIcons[weatherType] || weatherIcons.default;
   }
 
   showError(cityName: string) {
