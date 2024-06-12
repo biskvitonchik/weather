@@ -1,10 +1,13 @@
 export class WeatherAPI {
-  constructor(apiKey, baseUrl) {
+apiKey: string;
+baseUrl: string;
+
+  constructor(apiKey: string, baseUrl: string) {
     this.apiKey = apiKey;
     this.baseUrl = baseUrl;
   }
 
-  async fetchData(city) {
+  async fetchData(city: string) {
     try {
       const response = await fetch(`${this.baseUrl}${city}&appid=${this.apiKey}`);
       if (!response.ok) {

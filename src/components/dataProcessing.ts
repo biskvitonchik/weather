@@ -1,10 +1,13 @@
 export class WeatherDataProcessor {
-  processWeatherData(data) {
+  processWeatherData(data: any): {
+    maxTemperatureByDay: { [key: string]: number };
+    iconsByDay: { [key: string]: string };
+  } {
     const maxTemperatureByDay = {};
     const iconsByDay = {};
     const todayDate = data.list[0].dt_txt.split(" ")[0].split("-")[2];
 
-    data.list.forEach((item) => {
+    data.list.forEach((item: any) => {
       const date = item.dt_txt.split(" ")[0].split("-")[2];
       const maxTemp = Math.round(item.main.temp_max - 273.15);
       const time = item.dt_txt.split(" ")[1];

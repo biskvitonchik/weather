@@ -1,4 +1,16 @@
 export class UI {
+  wrapper: HTMLDivElement;
+  weather: HTMLElement;
+  weatherIcon: HTMLImageElement;
+  degrees: HTMLDivElement;
+  cityName: HTMLDivElement;
+  parameters: HTMLElement;
+  speedWind: HTMLDivElement;
+  humidity: HTMLDivElement;
+  errorMessage: HTMLDivElement;
+  weekCard: HTMLElement;
+  forecastInscription: HTMLParagraphElement;
+
   constructor() {
     this.wrapper = document.querySelector(".wrapper");
     this.weather = document.querySelector(".weather");
@@ -13,7 +25,7 @@ export class UI {
     this.forecastInscription = document.querySelector(".forecast-inscription");
   }
 
-  updateUI(data) {
+  updateUI(data: any) {
     this.degrees.innerHTML =
       Math.floor(data.list[0].main.temp - 273.15) + "&#176;";
     this.cityName.innerHTML = data.city.name;
@@ -28,7 +40,7 @@ export class UI {
     this.setBackgroundAndIcon(weatherType);
   }
 
-  setBackgroundAndIcon(weatherType) {
+  setBackgroundAndIcon(weatherType: string) {
     const weatherConfig = {
       Clouds: {
         background: "public/images/clouds.jpg",
@@ -58,7 +70,7 @@ export class UI {
     this.weatherIcon.src = icon;
   }
 
-  createWeekCard(maxTemperatureByDay, iconsByDay) {
+  createWeekCard(maxTemperatureByDay: {[key:string]: number}, iconsByDay: {[key: string]: string}) {
     this.weekCard.textContent = "";
     this.weekCard.style.display = "flex";
     let count = 0;
@@ -79,7 +91,7 @@ export class UI {
     }
   }
 
-  getIconSrc(weatherType) {
+  getIconSrc(weatherType: string): string {
     const weatherIcons = {
       Clouds: "public/icons/cloudsIcon.png",
       Clear: "public/icons/sunIcon.png",
@@ -91,7 +103,7 @@ export class UI {
     return weatherIcons[weatherType] || weatherIcons["default"];
   }
 
-  showError(cityName) {
+  showError(cityName: string) {
     this.weekCard.textContent = "";
     this.errorMessage.textContent = `City: '${cityName}' not found`;
     this.errorMessage.style.display = "block";
