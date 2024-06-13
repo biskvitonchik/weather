@@ -44,29 +44,33 @@ export class UI {
     const weatherConfig: Record<string, { background: string; icon: string }> =
       {
         Clouds: {
-          background: "public/images/clouds.jpg",
-          icon: "public/icons/cloudsIcon.png",
+          background: `${import.meta.env.BASE_URL}/images/clouds.jpg`,
+          icon: `${import.meta.env.BASE_URL}/icons/cloudsIcon.png`,
         },
         Clear: {
-          background: "public/images/clearSky.jpg",
-          icon: "public/icons/sunIcon.png",
+          background: `${import.meta.env.BASE_URL}/images/clearSky.jpg`,
+          icon: `${import.meta.env.BASE_URL}/icons/sunIcon.png`,
         },
         Rain: {
-          background: "public/images/rain.jpg",
-          icon: "public/icons/rainIcon.png",
+          background: `${import.meta.env.BASE_URL}/images/rain.jpg`,
+          icon: `${import.meta.env.BASE_URL}/icons/rainIcon.png`,
         },
         Mist: {
-          background: "public/images/mist.png",
-          icon: "public/icons/mistIcon.png",
+          background: `${import.meta.env.BASE_URL}/images/mist.png`,
+          icon: `${import.meta.env.BASE_URL}/icons/mistIcon.png`,
         },
         Haze: {
-          background: "public/images/haze.jpg",
-          icon: "public/icons/hazeIcon.png",
+          background: `${import.meta.env.BASE_URL}/images/haze.jpg`,
+          icon: `${import.meta.env.BASE_URL}/icons/hazeIcon.png`,
         },
-        default: { background: "none", icon: "public/icons/defaultIcon.png" },
+        default: {
+          background: "none",
+          icon: `${import.meta.env.BASE_URL}/icons/defaultIcon.png`,
+        },
       };
 
-    const { background, icon } = weatherConfig[weatherType] || weatherConfig.default;
+    const { background, icon } =
+      weatherConfig[weatherType] || weatherConfig.default;
     this.wrapper.style.backgroundImage = `url('${background}')`;
     this.weatherIcon.src = icon;
   }
@@ -97,12 +101,12 @@ export class UI {
 
   getIconSrc(weatherType: string): string {
     const weatherIcons: Record<string, string> = {
-      Clouds: "public/icons/cloudsIcon.png",
-      Clear: "public/icons/sunIcon.png",
-      Rain: "public/icons/rainIcon.png",
-      Mist: "public/icons/mistIcon.png",
-      Haze: "public/icons/hazeIcon.png",
-      default: "public/icons/defaultIcon.png",
+      Clouds: `${import.meta.env.BASE_URL}/icons/cloudsIcon.png`,
+      Clear: `${import.meta.env.BASE_URL}/icons/sunIcon.png`,
+      Rain: `${import.meta.env.BASE_URL}/icons/rainIcon.png`,
+      Mist: `${import.meta.env.BASE_URL}/icons/mistIcon.png`,
+      Haze: `${import.meta.env.BASE_URL}/icons/hazeIcon.png`,
+      default: `${import.meta.env.BASE_URL}/icons/defaultIcon.png`,
     };
     return weatherIcons[weatherType] || weatherIcons.default;
   }
